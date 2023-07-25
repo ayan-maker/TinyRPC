@@ -6,7 +6,10 @@
 #include <sys/socket.h>
 #include <sys/epoll.h>
 #include <unistd.h>
+#include <vector>
+
 #include "../coroutine/coroutine.h"
+#include "../LOCK/lock.h"
 
 class Reactor;
 
@@ -63,5 +66,27 @@ public:
 
     Reactor *get_Reactor(); 
 };  
+
+
+class FdPool {
+private:
+    std::vector<std::pair<FdEvent::FdEventptr,bool>> m_pool;
+
+    int m_size;
+    
+    Locker m_lock;
+    // static FdPool * m_instance;
+    FdPool();
+
+public:
+    static FdPool * get_instance();
+
+    FdEvent::FdEventptr get_fd();
+
+    void init(int size);
+
+    void re_fd(FdEvent::FdEventptr);
+};
+
 
 #endif

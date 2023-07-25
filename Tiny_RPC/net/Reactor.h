@@ -13,7 +13,7 @@
 // 处理事务的Reactor
 class Reactor {
 public:
-    static  const int MAX_EVENTS_NUM = 1024;
+    static const int MAX_EVENTS_NUM = 1024;
     static thread_local Reactor *current_Reactor; // 每个线程有一个reacter
 
     // static Accept *main_Reactor; // 主进程用于监听的进程
@@ -43,13 +43,20 @@ private:
 
     // void listen_work(int port); // epoll 作为listen监听存在
 
+    Reactor();
+
+    Reactor(const Reactor & tmp) = delete;
+
+    Reactor *operator=(const Reactor & tmp) = delete;
+
     void fd_work(); // 文件事件存在 
 
     void deal_fd(epoll_event &ev); // 处理文件事件
+
 public:
     
     ~Reactor();
-    Reactor();
+    
     void add_fdevent(FdEvent* event);
     void add_fdevent(FdEvent::FdEventptr &event);
     void del_fdevent(FdEvent* event);

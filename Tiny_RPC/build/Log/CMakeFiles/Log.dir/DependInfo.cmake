@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/hy/c++/Tiny_RPC/Log/Log.cpp" "/home/hy/c++/Tiny_RPC/build/Log/CMakeFiles/Log.dir/Log.cpp.o"
+  "/home/hy/TinyRPC/Tiny_RPC/Log/Log.cpp" "/home/hy/TinyRPC/Tiny_RPC/build/Log/CMakeFiles/Log.dir/Log.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

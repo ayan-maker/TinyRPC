@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/hy/c++/Tiny_RPC/test/test_reactor.cpp" "/home/hy/c++/Tiny_RPC/build/CMakeFiles/tcpserver.dir/test/test_reactor.cpp.o"
+  "/home/hy/TinyRPC/Tiny_RPC/test/test_reactor.cpp" "/home/hy/TinyRPC/Tiny_RPC/build/CMakeFiles/tcpserver.dir/test/test_reactor.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -14,11 +14,12 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "/home/hy/c++/Tiny_RPC/build/config/CMakeFiles/config.dir/DependInfo.cmake"
-  "/home/hy/c++/Tiny_RPC/build/net/CMakeFiles/net.dir/DependInfo.cmake"
-  "/home/hy/c++/Tiny_RPC/build/coroutine/CMakeFiles/coroutine.dir/DependInfo.cmake"
-  "/home/hy/c++/Tiny_RPC/build/Log/CMakeFiles/Log.dir/DependInfo.cmake"
-  "/home/hy/c++/Tiny_RPC/build/LOCK/CMakeFiles/LOCK.dir/DependInfo.cmake"
+  "/home/hy/TinyRPC/Tiny_RPC/build/config/CMakeFiles/config.dir/DependInfo.cmake"
+  "/home/hy/TinyRPC/Tiny_RPC/build/net/CMakeFiles/net.dir/DependInfo.cmake"
+  "/home/hy/TinyRPC/Tiny_RPC/build/coroutine/CMakeFiles/coroutine.dir/DependInfo.cmake"
+  "/home/hy/TinyRPC/Tiny_RPC/build/Log/CMakeFiles/Log.dir/DependInfo.cmake"
+  "/home/hy/TinyRPC/Tiny_RPC/build/LOCK/CMakeFiles/LOCK.dir/DependInfo.cmake"
+  "/home/hy/TinyRPC/Tiny_RPC/build/hook/CMakeFiles/hook.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

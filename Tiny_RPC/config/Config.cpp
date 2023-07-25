@@ -1,13 +1,14 @@
 #include "Config.h"
 
-Config::Config(const char*name, const char* path,int log_size, int pool_size, int pool_stack_size,int io_size):\
+Config::Config(const char*name, const char* path,int log_size, int pool_size, int pool_stack_size,int io_size,int port):\
 m_log_name(name),m_log_path(path),m_log_size(log_size),m_pool_size(pool_size),m_pool_stack_size(pool_stack_size),\
-m_io_size(io_size) {
+m_io_size(io_size), m_port(port){
     m_Log = AsyncLogger::get_instance();
     m_Log->init(m_log_name,m_log_path,m_log_size);
     m_cor_pool = Coroutine_pool::get_instance();
     m_cor_pool->init(m_pool_size,m_pool_stack_size);
-    m_Accept = std::shared_ptr<Accept>(new Accept(io_size));
+    m_Accept = std::shared_ptr<Accept>(new Accept(io_size,port));
+    
 }
 
 Config::~Config() {

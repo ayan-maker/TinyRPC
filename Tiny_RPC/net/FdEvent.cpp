@@ -106,6 +106,52 @@ void FdEvent::set_Reactor(Reactor *reactor) {
     m_reactor = reactor;
 }
 
-// Reactor * FdEvent::get_reactor() {
-//     return m_reactor;
-// }
+Reactor * FdEvent::get_Reactor() {
+    return m_reactor;
+}
+
+
+// ----------------------FdPool---------------------------
+
+FdPool * FdPool::get_instance() {
+    static FdPool instance;
+    return &instance;
+}
+
+FdPool::FdPool() {
+
+}
+
+FdEvent::FdEventptr FdPool::get_fd() {
+    int t = -1;
+    m_lock.lock();
+    for(int i=0; i<m_size; i++) {
+        if(m_pool[i].second == false) {
+            m_pool[i].second = true;
+            t=i;
+            break;
+        }
+    }
+    m_lock.unlock();
+    if(t > -1) {
+        return m_pool[t].first;
+    }
+    return nullptr;
+}
+
+void FdPool::init(int size) {
+    m_size = size;
+}
+
+void FdPool::re_fd(FdEvent::FdEventptr fd) {
+    
+    for(int i=0; i<m_size; i++) {
+        if(m_pool[i].first == fd) {
+            m_lock.lock();
+            m_pool[i].second = false;
+            m_lock.unlock();
+            break;
+        }
+    }
+    
+}

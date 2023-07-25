@@ -4,6 +4,7 @@
 * @brief 监听Reactor
 */
 #include <vector>
+#include "FdEvent.h"
 #include "Reactor.h"
 
 class Accept {
@@ -17,7 +18,7 @@ private:
     bool m_running; 
 
     
-    std::vector<std::pair<Reactor::ReactorPtr,pthread_t>> m_reactors; // 工作Reactor，每个rector对应一个线程 
+    std::vector<std::pair<Reactor *, pthread_t>> m_reactors; // 工作Reactor，每个rector对应一个线程 
 
     static bool m_listen_run;
     static Locker m_io_lock;
@@ -26,7 +27,7 @@ private:
 public:
     using Acceptptr = std::shared_ptr<Accept>;
 
-    Accept(int size);
+    Accept(int size, int port);
     ~Accept();
 
     void wake_up(int i);

@@ -1,0 +1,2 @@
+/usr/bin/ar qc libhook.a CMakeFiles/hook.dir/coroutine_hook.cpp.o
+/usr/bin/ranlib libhook.a

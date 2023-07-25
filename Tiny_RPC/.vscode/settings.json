@@ -34,6 +34,9 @@
         "fstream": "cpp",
         "sstream": "cpp",
         "deque": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "memory_resource": "cpp",
+        "shared_mutex": "cpp",
+        "*.def": "cpp"
     }
 }

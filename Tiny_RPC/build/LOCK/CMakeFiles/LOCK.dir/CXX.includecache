@@ -1,4 +1,4 @@
-#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
 
 #IncludeRegexScan: ^.*$
 
@@ -6,11 +6,11 @@
 
 #IncludeRegexTransform: 
 
-/home/hy/c++/Tiny_RPC/LOCK/lock.cpp
+/home/hy/TinyRPC/Tiny_RPC/LOCK/lock.cpp
 lock.h
-/home/hy/c++/Tiny_RPC/LOCK/lock.h
+/home/hy/TinyRPC/Tiny_RPC/LOCK/lock.h
 
-/home/hy/c++/Tiny_RPC/LOCK/lock.h
+/home/hy/TinyRPC/Tiny_RPC/LOCK/lock.h
 stdio.h
 -
 pthread.h

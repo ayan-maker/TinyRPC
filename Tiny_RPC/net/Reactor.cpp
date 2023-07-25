@@ -6,9 +6,13 @@
 #include <sys/types.h>
 #include <netinet/in.h>
 #include <sys/eventfd.h>
+#include <signal.h>
+
 #include "../Pthreadpool/Pthreadpool/Pthreadpool.h"
 #include "../coroutine/coroutine_pool.h"
-#include "FdEvent.h"
+#include "../hook/coroutine_hook.h"
+
+thread_local Reactor *Reactor::current_Reactor = nullptr;
 
 Reactor::Reactor() {
     m_fd_count = 0;
@@ -89,7 +93,23 @@ void Reactor::del_fdevent(FdEvent* event) {
 
 }
 
+void Reactor::del_fdevent(FdEvent::FdEventptr &event) {
+    if(m_fd_set.find(event->get_fd()) != m_fd_set.end()) {
+        m_fd_set.erase(event->get_fd());
+        epoll_ctl(m_epollfd,EPOLL_CTL_DEL,event->get_fd(),nullptr);
+    }
+    else {
+        ErrorLog << "ERROR: fd not found" ;
+    }
+}
+
 void Reactor::loop() {
+    // 屏蔽信号
+    sigset_t mask;
+    sigfillset(&mask);
+    sigdelset(&mask,SIGINT);
+    pthread_sigmask(SIG_BLOCK,&mask,nullptr);
+
     // 监听事件
     if(m_runing) {
         fd_work();
@@ -254,4 +274,11 @@ void Reactor::deal_fd(epoll_event &ev) {
     //     }
     // }
     
+}
+
+Reactor *Reactor::get_main_reactor() {
+    if(current_Reactor == nullptr) {
+        current_Reactor = new Reactor;
+    }
+    return current_Reactor;
 }

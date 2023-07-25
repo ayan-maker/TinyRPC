@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/LOCK.dir/lock.cpp.o"
-  "libLOCK.pdb"
   "libLOCK.a"
+  "libLOCK.pdb"
 )
 
 # Per-language clean rules from dependency scanning.

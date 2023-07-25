@@ -2,16 +2,24 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <signal.h>
 
 #include <string.h>
 
 #include "../coroutine/coroutine_pool.h"
-#include "../coroutine/coroutine_hook.h"
+#include "../hook/coroutine_hook.h"
+
+// extern ssize_t hook_read(int fd,void *buf,size_t buflen); 
+
+// extern ssize_t hook_write (int fd, const void *buf, size_t buflen);
+
+// extern int hook_accept (int fd, struct sockaddr *addr, socklen_t *addrlen);
 
 bool Accept::m_listen_run;
 
 Locker Accept::m_io_lock;
-Accept::Accept(int size):m_workerfd_size(size) {
+
+Accept::Accept(int size, int port):m_workerfd_size(size), m_port(port) {
     
     // 1、epoll
     m_epollfd = epoll_create(1);
@@ -64,7 +72,7 @@ Accept::~Accept() {
 
 void * Accept::io_pthread_func(void *arg) {
     Accept *accept = (Accept*)arg;
-    std::shared_ptr<Reactor> tmp(new Reactor);
+    Reactor * tmp = Reactor::get_main_reactor();
     m_io_lock.lock();
     accept->m_reactors.push_back(std::make_pair(tmp,pthread_self()));
     m_io_lock.unlock();
@@ -72,6 +80,13 @@ void * Accept::io_pthread_func(void *arg) {
 }
 
 void Accept::loop() {
+    // 屏蔽信号
+    sigset_t mask;
+    sigfillset(&mask);
+    sigdelset(&mask,SIGINT);
+    pthread_sigmask(SIG_BLOCK,&mask,nullptr);
+    
+
     // 将监听fd绑到epoll中
     struct epoll_event event;
     memset(&event, 0, sizeof(event));
@@ -115,7 +130,7 @@ void Accept::loop() {
 
 void Accept::close_loop() {
     m_running = false;
-    m_call_back = false;
+    m_call_back = nullptr;
     for(int i=0;i<m_workerfd_size;i++) {
         m_reactors[i].first->close_loop();
     }
@@ -124,7 +139,7 @@ void Accept::close_loop() {
 
 void Accept::read_work() {
     while(m_listen_run) {
-        int socketfd = accept(m_listenfd,nullptr,0);
+        int socketfd = hook_accept(m_listenfd,nullptr,0);
         
         int no = socketfd % m_workerfd_size;
         std::shared_ptr<FdEvent> Fd(new FdEvent(socketfd));
@@ -144,5 +159,9 @@ void Accept::wake_up(int i) {
     // 唤醒相关的工作线程
     int fd = m_reactors[i].first->re_wake();
     int buf[8];
-    write(fd,buf,8);
+    hook_write(fd,buf,8);
+}
+
+void Accept::set_call_back(std::function<void(int)> func) {
+    m_call_back = func;
 }

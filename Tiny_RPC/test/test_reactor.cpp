@@ -19,7 +19,7 @@ void tcpserver_func(int fd) {
 }
 
 int main() {
-    Config config("tcpserver","../logs/tcpserver/",1000,100,1024 * 128,10);
+    Config config("tcpserver","../logs/tcpserver/",1000,100,1024 * 128,10,4999);
     config.set_io_func(tcpserver_func);
     config.start();
 }

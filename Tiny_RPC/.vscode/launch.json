@@ -8,7 +8,7 @@
             "name": "(gdb) 启动",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/cortest",
+            "program": "${workspaceFolder}/build/tcpserver",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",

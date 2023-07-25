@@ -12,6 +12,7 @@ add_subdirectory(LOCK)
 add_subdirectory(Log)
 add_subdirectory(coroutine)
 add_subdirectory(net)
+add_subdirectory(hook)
 add_subdirectory(config)
 
 add_executable(tcpserver test/test_reactor.cpp)

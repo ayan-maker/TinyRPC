@@ -1,1 +1,1 @@
-/usr/bin/c++    -g  -lpthread -ldl CMakeFiles/tcpserver.dir/test/test_reactor.cpp.o  -o tcpserver config/libconfig.a net/libnet.a coroutine/libcoroutine.a Log/libLog.a LOCK/libLOCK.a 
+/usr/bin/c++  -g -lpthread -ldl CMakeFiles/tcpserver.dir/test/test_reactor.cpp.o -o tcpserver  config/libconfig.a net/libnet.a coroutine/libcoroutine.a Log/libLog.a LOCK/libLOCK.a hook/libhook.a net/libnet.a coroutine/libcoroutine.a Log/libLog.a -pthread LOCK/libLOCK.a -ldl 

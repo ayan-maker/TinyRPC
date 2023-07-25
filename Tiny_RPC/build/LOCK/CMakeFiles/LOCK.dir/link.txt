@@ -1,2 +1,2 @@
-/usr/bin/ar qc libLOCK.a  CMakeFiles/LOCK.dir/lock.cpp.o
+/usr/bin/ar qc libLOCK.a CMakeFiles/LOCK.dir/lock.cpp.o
 /usr/bin/ranlib libLOCK.a

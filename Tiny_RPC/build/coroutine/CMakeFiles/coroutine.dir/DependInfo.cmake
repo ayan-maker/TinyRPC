@@ -5,7 +5,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_ASM
-  "/home/hy/c++/Tiny_RPC/coroutine/coctx_swap.S" "/home/hy/c++/Tiny_RPC/build/coroutine/CMakeFiles/coroutine.dir/coctx_swap.S.o"
+  "/home/hy/TinyRPC/Tiny_RPC/coroutine/coctx_swap.S" "/home/hy/TinyRPC/Tiny_RPC/build/coroutine/CMakeFiles/coroutine.dir/coctx_swap.S.o"
   )
 set(CMAKE_ASM_COMPILER_ID "GNU")
 
@@ -13,10 +13,9 @@ set(CMAKE_ASM_COMPILER_ID "GNU")
 set(CMAKE_ASM_TARGET_INCLUDE_PATH
   )
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/hy/c++/Tiny_RPC/coroutine/coroutine.cpp" "/home/hy/c++/Tiny_RPC/build/coroutine/CMakeFiles/coroutine.dir/coroutine.cpp.o"
-  "/home/hy/c++/Tiny_RPC/coroutine/coroutine_hook.cpp" "/home/hy/c++/Tiny_RPC/build/coroutine/CMakeFiles/coroutine.dir/coroutine_hook.cpp.o"
-  "/home/hy/c++/Tiny_RPC/coroutine/coroutine_pool.cpp" "/home/hy/c++/Tiny_RPC/build/coroutine/CMakeFiles/coroutine.dir/coroutine_pool.cpp.o"
-  "/home/hy/c++/Tiny_RPC/coroutine/memory.cpp" "/home/hy/c++/Tiny_RPC/build/coroutine/CMakeFiles/coroutine.dir/memory.cpp.o"
+  "/home/hy/TinyRPC/Tiny_RPC/coroutine/coroutine.cpp" "/home/hy/TinyRPC/Tiny_RPC/build/coroutine/CMakeFiles/coroutine.dir/coroutine.cpp.o"
+  "/home/hy/TinyRPC/Tiny_RPC/coroutine/coroutine_pool.cpp" "/home/hy/TinyRPC/Tiny_RPC/build/coroutine/CMakeFiles/coroutine.dir/coroutine_pool.cpp.o"
+  "/home/hy/TinyRPC/Tiny_RPC/coroutine/memory.cpp" "/home/hy/TinyRPC/Tiny_RPC/build/coroutine/CMakeFiles/coroutine.dir/memory.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -26,8 +25,8 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "/home/hy/c++/Tiny_RPC/build/Log/CMakeFiles/Log.dir/DependInfo.cmake"
-  "/home/hy/c++/Tiny_RPC/build/LOCK/CMakeFiles/LOCK.dir/DependInfo.cmake"
+  "/home/hy/TinyRPC/Tiny_RPC/build/Log/CMakeFiles/Log.dir/DependInfo.cmake"
+  "/home/hy/TinyRPC/Tiny_RPC/build/LOCK/CMakeFiles/LOCK.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

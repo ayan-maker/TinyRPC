@@ -19,9 +19,9 @@ private:
     int m_pool_stack_size;
     // Accept 参数
     int m_io_size;
-
+    int m_port;
 public:
-    Config(const char*name, const char* path,int log_size, int pool_size, int pool_stack_size,int io_size);
+    Config(const char*name, const char* path,int log_size, int pool_size, int pool_stack_size,int io_size, int port);
     
     ~Config();
 
