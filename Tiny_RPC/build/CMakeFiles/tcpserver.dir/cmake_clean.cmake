@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/tcpserver.dir/test/test_reactor.cpp.o"
-  "tcpserver"
   "tcpserver.pdb"
+  "tcpserver"
 )
 
 # Per-language clean rules from dependency scanning.

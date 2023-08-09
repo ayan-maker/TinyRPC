@@ -3,6 +3,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <signal.h>
+#include <fcntl.h>
 
 #include <string.h>
 
@@ -21,11 +22,24 @@ Locker Accept::m_io_lock;
 
 Accept::Accept(int size, int port):m_workerfd_size(size), m_port(port) {
     
+    m_running = true;
+
     // 1、epoll
     m_epollfd = epoll_create(1);
 
     // 1、设置监听listenfd
     m_listenfd = socket(AF_INET, SOCK_STREAM, 0);
+
+    // 设置非阻塞
+    int fg = fcntl(m_listenfd,F_GETFL,0);
+    fcntl(m_listenfd,F_SETFL,fg | O_NONBLOCK);
+    fg = fcntl(m_listenfd,F_GETFL,0);
+    if(fg & O_NONBLOCK) {
+        DebugLog<<"fd is set  noblock";
+    }
+    else {
+        ErrorLog<<"fd set noblock fail!!";
+    }
 
     struct sockaddr_in addr;
     memset(&addr, 0, sizeof(addr));
@@ -55,6 +69,8 @@ Accept::Accept(int size, int port):m_workerfd_size(size), m_port(port) {
         ErrorLog << "Error: Failed to listen()";
         exit(1);
     }
+
+    
 
     // 开辟线程
     for(int i = 0; i < m_workerfd_size; i++) {
@@ -103,11 +119,13 @@ void Accept::loop() {
     while(m_running) {
         struct epoll_event events[MAX_EVENTS];
 
-        int index = epoll_wait(m_epollfd,events,MAX_EVENTS,900000);
+        int index = 0;
+        while((index = epoll_wait(m_epollfd,events,MAX_EVENTS,900000))==-1 && errno == EINTR);
 
         if(index < 0) {
-            ErrorLog << "ERROR: epoll_wait" ;
+            ErrorLog << "ERROR: epoll_wait"<< errno ;
             perror("epoll_wait");
+
             exit(1);
         }
         if(index == 0) {

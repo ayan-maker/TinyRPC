@@ -1,18 +1,36 @@
 #include "coroutine_hook.h"
 
-void to_epoll(FdEvent::FdEventptr fd) {
+// 将fdp 修改事件到epoll 中进行监听 0为读
+void to_epoll(int fd, int rw) {
     Reactor *tmp = Reactor::get_main_reactor();
     assert(tmp != nullptr);
-
-    tmp->add_fdevent(fd);
-    fd->set_Reactor(tmp);
+    if(!tmp->find_fd(fd)) {
+        ErrorLog << "fd is not in this Reactor";
+        exit(1);
+    }
+    epoll_event event;
+    memset(&event,0,sizeof(event));
+    event.data.fd = fd;
+    if(rw == 0) { // 读 
+        event.events |= EPOLLIN | EPOLLET;
+    } else {
+        event.events |= EPOLLOUT | EPOLLET;
+    }
+    tmp->mod_fdevent(fd,event);
 }
 
-void out_epoll(FdEvent::FdEventptr fd) {
+// 将fd 事件置空
+void out_epoll(int fd) {
     Reactor *tmp = Reactor::get_main_reactor();
     assert(tmp != nullptr);
-
-    tmp->del_fdevent(fd); 
+    if(!tmp->find_fd(fd)) {
+        ErrorLog << "fd is not in this Reactor";
+        exit(1);
+    }
+    epoll_event event;
+    memset(&event,0,sizeof(event));
+    event.data.fd = fd;
+    tmp->mod_fdevent(fd,event);
 }
 
 bool g_hook_enabled = false;
@@ -44,20 +62,12 @@ ssize_t hook_read(int fd,void *buf,size_t buflen) {
         return n; 
     }
 
-    // 将fdp 加入到epoll 中进行监听
-    std::shared_ptr<FdEvent> fdp(new FdEvent(fd));
-    fdp->set_event(true,false,false);
-    fdp->set_noblock();
-    fdp->set_coroutine(Coroutine::GetCoroutine());
+    // 将fdp 修改事件到epoll 中进行监听
+    to_epoll(fd, 0);
     
-    to_epoll(fdp);
-    
-    Coroutine::Yield(); // 唤醒主协程
+    Coroutine::Yield(); // 唤醒主协程 
 
-    // tmp->del_fdevent(fdp); 
-
-    out_epoll(fdp);
-
+    out_epoll(fd);
     // 再次唤醒
     DebugLog << "read hook func end";
     return g_sys_read_fun(fd, buf, buflen);
@@ -79,19 +89,11 @@ ssize_t hook_write (int fd, const void *buf, size_t buflen) {
     }
 
     // 申请fd 将fd放进reactor中
-    std::shared_ptr<FdEvent> fdp(new FdEvent(fd));
-    fdp->set_event(false,false,false);
-    fdp->set_noblock();
-    fdp->set_coroutine(Coroutine::GetCoroutine());
-    // fdp->set_Reactor(tmp);
-    // tmp->add_fdevent(fdp);
-    to_epoll(fdp);
+    to_epoll(fd,1);
 
     Coroutine::Yield(); 
 
-    // tmp->del_fdevent(fdp);
-
-    out_epoll(fdp);
+    out_epoll(fd);
     DebugLog << "write hook fun end";
     return g_sys_write_fun(fd,buf,buflen);
 }
@@ -110,19 +112,13 @@ int hook_accept (int fd, struct sockaddr *addr, socklen_t *addrlen) {
         return n; 
     }
 
-    std::shared_ptr<FdEvent> fdp(new FdEvent(fd));
-    fdp->set_event(false,true,false); // accept 必须是边缘触发
-    fdp->set_noblock();
-    fdp->set_coroutine(Coroutine::GetCoroutine());
-    // fdp->set_Reactor(tmp);
-    // tmp->add_fdevent(fdp);
-    to_epoll(fdp);
+    // to_epoll(fd,0);
 
     Coroutine::Yield();
 
     // tmp->del_fdevent(fdp);
 
-    out_epoll(fdp);
+    // out_epoll(fd);
 
     DebugLog << "accept hook func end";
 

@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string.h>
 
+#include "../Log/Log.h"
+
 FdEvent::FdEvent(int fd):m_fd(fd){
     
     memset(&m_event,0,sizeof(m_event));
@@ -30,22 +32,22 @@ void FdEvent::set_callback(IOEvent tag,std::function<void()> cb) {
 
 void FdEvent::set_noblock() {
     if(m_fd < 0) {
-        std::cout<<"error: fd is null"<<std::endl;
+        ErrorLog<<"error: fd is null";
         return;
     }
     // 找出标志位
     int flag = fcntl(m_fd,F_GETFL,0);
     if(flag & O_NONBLOCK) {
-        std::cout<<"fd already is noblock"<<std::endl;
+        DebugLog<<"fd already is noblock";
         return;
     }
-    fcntl(m_fd,F_SETFL,flag & O_NONBLOCK);
+    fcntl(m_fd,F_SETFL,flag | O_NONBLOCK);
     flag = fcntl(m_fd,F_GETFL,0);
     if(flag & O_NONBLOCK) {
-        std::cout<<"fd is set  noblock"<<std::endl;
+        DebugLog<<"fd is set  noblock";
     }
     else {
-        std::cout<<"fd set noblock fail"<<std::endl;
+        ErrorLog<<"fd set noblock fail";
     }
 }
 
@@ -92,6 +94,13 @@ void FdEvent::set_event(bool in,bool ET=false,bool oneshot=false) {
 
 void FdEvent::set_event(const epoll_event &ep) {
     m_event = ep;
+}
+
+void FdEvent::set_defalt() {
+    m_fd = -1;
+    memset(&m_event, 0, sizeof(m_event));
+    m_coroutine = nullptr;
+    m_reactor = nullptr;
 }
 
 void FdEvent::set_coroutine(Coroutine *cor) {

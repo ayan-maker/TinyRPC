@@ -6,11 +6,11 @@
 
 #IncludeRegexTransform: 
 
-/home/hy/TinyRPC/Tiny_RPC/LOCK/lock.cpp
+/home/hy/myhome/Tiny_RPC/LOCK/lock.cpp
 lock.h
-/home/hy/TinyRPC/Tiny_RPC/LOCK/lock.h
+/home/hy/myhome/Tiny_RPC/LOCK/lock.h
 
-/home/hy/TinyRPC/Tiny_RPC/LOCK/lock.h
+/home/hy/myhome/Tiny_RPC/LOCK/lock.h
 stdio.h
 -
 pthread.h

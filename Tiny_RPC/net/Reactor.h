@@ -61,6 +61,7 @@ public:
     void add_fdevent(FdEvent::FdEventptr &event);
     void del_fdevent(FdEvent* event);
     void del_fdevent(FdEvent::FdEventptr &event);
+    void mod_fdevent(int fd, epoll_event event);
     void loop(); // reactor loop
     void add_func(std::function<void()> func);
     void close_loop();

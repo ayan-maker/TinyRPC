@@ -1,2 +1,0 @@
-/usr/bin/ar qc libFd.a CMakeFiles/Fd.dir/FdEvent.cpp.o
-/usr/bin/ranlib libFd.a

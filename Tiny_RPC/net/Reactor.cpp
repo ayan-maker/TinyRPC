@@ -103,6 +103,16 @@ void Reactor::del_fdevent(FdEvent::FdEventptr &event) {
     }
 }
 
+void Reactor::mod_fdevent(int fd, epoll_event event) {
+    if(m_fd_set.find(fd) == m_fd_set.end()) {
+        ErrorLog << "fd is not in this Reactor";
+        exit(1);
+    }
+    FdEvent * t = m_fd_set[fd];
+    t->set_event(event);
+    epoll_ctl(m_epollfd, EPOLL_CTL_MOD, fd, &(t->get_event()));
+}
+
 void Reactor::loop() {
     // 屏蔽信号
     sigset_t mask;
@@ -195,10 +205,11 @@ void Reactor::fd_work() {
 
         epoll_event events[MAX_EVENTS_NUM];
 
-        int index = epoll_wait(m_epollfd,events,MAX_EVENTS_NUM,900000);
+        int index = 0;
+        while((index = epoll_wait(m_epollfd,events,MAX_EVENTS_NUM,900000))==-1 && errno == EINTR);
 
         if(index < 0) {
-            ErrorLog << "ERROR: epoll_wait" ;
+            ErrorLog << "ERROR: epoll_wait" << errno ;
             perror("epoll_wait");
             exit(1);
         }
@@ -209,7 +220,8 @@ void Reactor::fd_work() {
         }
 
         for(int i = 0;i<index;i++) {
-            if(events[i].data.fd == m_wakeupfd) { // 用于唤醒执行任务
+            int fdi = events[i].data.fd;
+            if(fdi == m_wakeupfd) { // 用于唤醒执行任务
                 char buf[8];
                 read(events[i].data.fd,buf,sizeof(buf));
                 std::queue<std::function<void()>> tmp;
@@ -227,6 +239,9 @@ void Reactor::fd_work() {
                 read(m_closefd,buf,sizeof(buf));
                 break;
             
+            } else if(events[i].events & (EPOLLIN | EPOLLRDHUP) ) { // fd断开链接
+
+                del_fdevent(m_fd_set[fdi]);
             } else {
                 deal_fd(events[i]);
             }

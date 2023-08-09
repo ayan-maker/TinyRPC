@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/hook.dir/coroutine_hook.cpp.o"
-  "libhook.a"
   "libhook.pdb"
+  "libhook.a"
 )
 
 # Per-language clean rules from dependency scanning.

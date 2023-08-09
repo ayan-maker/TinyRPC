@@ -58,6 +58,8 @@ public:
 
     void set_event(const epoll_event &ep);
 
+    void set_defalt(); // 初始化
+
     void set_coroutine(Coroutine *cor);
 
     Coroutine *get_coroutine(); 

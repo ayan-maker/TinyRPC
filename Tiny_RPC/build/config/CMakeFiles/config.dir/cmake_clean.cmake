@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/config.dir/Config.cpp.o"
-  "libconfig.a"
   "libconfig.pdb"
+  "libconfig.a"
 )
 
 # Per-language clean rules from dependency scanning.

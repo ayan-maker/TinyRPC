@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/hy/TinyRPC/Tiny_RPC/LOCK/lock.h
+/home/hy/myhome/Tiny_RPC/LOCK/lock.h
 stdio.h
 -
 pthread.h
@@ -16,7 +16,7 @@ semaphore.h
 exception
 -
 
-/home/hy/TinyRPC/Tiny_RPC/Log/Log.cpp
+/home/hy/myhome/Tiny_RPC/Log/Log.cpp
 unistd.h
 -
 sys/syscall.h
@@ -24,11 +24,11 @@ sys/syscall.h
 assert.h
 -
 ../coroutine/coroutine.h
-/home/hy/TinyRPC/Tiny_RPC/coroutine/coroutine.h
+/home/hy/myhome/Tiny_RPC/coroutine/coroutine.h
 Log.h
-/home/hy/TinyRPC/Tiny_RPC/Log/Log.h
+/home/hy/myhome/Tiny_RPC/Log/Log.h
 
-/home/hy/TinyRPC/Tiny_RPC/Log/Log.h
+/home/hy/myhome/Tiny_RPC/Log/Log.h
 sys/time.h
 -
 string
@@ -46,9 +46,9 @@ queue
 pthread.h
 -
 ../LOCK/lock.h
-/home/hy/TinyRPC/Tiny_RPC/LOCK/lock.h
+/home/hy/myhome/Tiny_RPC/LOCK/lock.h
 
-/home/hy/TinyRPC/Tiny_RPC/coroutine/coroutine.h
+/home/hy/myhome/Tiny_RPC/coroutine/coroutine.h
 functional
 -
 memory

@@ -1,10 +1,10 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/coroutine.dir/coctx_swap.S.o"
-  "CMakeFiles/coroutine.dir/coroutine.cpp.o"
   "CMakeFiles/coroutine.dir/coroutine_pool.cpp.o"
+  "CMakeFiles/coroutine.dir/coroutine.cpp.o"
   "CMakeFiles/coroutine.dir/memory.cpp.o"
-  "libcoroutine.a"
+  "CMakeFiles/coroutine.dir/coctx_swap.S.o"
   "libcoroutine.pdb"
+  "libcoroutine.a"
 )
 
 # Per-language clean rules from dependency scanning.
